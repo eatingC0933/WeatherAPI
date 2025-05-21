@@ -27,6 +27,6 @@ public class CombinedController {
     public String showWeather(Model model) {
         model.addAttribute("weatherData", weatherService.getOptimalForecast());
         model.addAttribute("pollenList", pollenClient.fetchPollenData());
-        return "weather";  // Should match src/main/resources/templates/weather.html
+        return "weather"; 
     }
 }
