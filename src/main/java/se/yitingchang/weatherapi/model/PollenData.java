@@ -1,84 +1,43 @@
-package se.yitingchang.weatherapi.model.Pollenpojos;
+package se.yitingchang.weatherapi.model;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-import javax.annotation.Generated;
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-        "id",
-        "name",
-        "forecasts",
-        "threshold"
-})
-@Generated("jsonschema2pojo")
 public class PollenData {
 
-    @JsonProperty("id")
     private String id;
-    @JsonProperty("name")
     private String name;
-    @JsonProperty("forecasts")
-    private String forecasts;
-    @JsonProperty("threshold")
-    private Integer threshold;
-    @JsonIgnore
-    private Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
+    private String level;
 
-    @JsonProperty("id")
+    public PollenData(String id, String name, String level) {
+        this.id = id;
+        this.name = name;
+        this.level = level;
+    }
+
+    public PollenData(String name, String level) {
+        this.name = name;
+        this.level = level;
+    }
+
     public String getId() {
         return id;
     }
 
-    @JsonProperty("id")
     public void setId(String id) {
         this.id = id;
     }
 
-    @JsonProperty("name")
     public String getName() {
         return name;
     }
 
-    @JsonProperty("name")
     public void setName(String name) {
         this.name = name;
     }
 
-    @JsonProperty("forecasts")
-    public String getForecasts() {
-        return forecasts;
+    public String getLevel() {
+        return level;
     }
 
-    @JsonProperty("forecasts")
-    public void setForecasts(String forecasts) {
-        this.forecasts = forecasts;
+    public void setLevel(String level) {
+        this.level = level;
     }
-
-    @JsonProperty("threshold")
-    public Integer getThreshold() {
-        return threshold;
-    }
-
-    @JsonProperty("threshold")
-    public void setThreshold(Integer threshold) {
-        this.threshold = threshold;
-    }
-
-    @JsonAnyGetter
-    public Map<String, Object> getAdditionalProperties() {
-        return this.additionalProperties;
-    }
-
-    @JsonAnySetter
-    public void setAdditionalProperty(String name, Object value) {
-        this.additionalProperties.put(name, value);
-    }
-
 }
