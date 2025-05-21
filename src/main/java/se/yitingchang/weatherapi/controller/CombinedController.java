@@ -6,7 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import se.yitingchang.weatherapi.model.PollenData;
-import se.yitingchang.weatherapi.service.PollenClient;
+import se.yitingchang.weatherapi.model.WeatherData;
+import se.yitingchang.weatherapi.service.PollenService;
 import se.yitingchang.weatherapi.service.WeatherService;
 
 import java.util.List;
@@ -15,18 +16,28 @@ import java.util.List;
 public class CombinedController {
 
     private final WeatherService weatherService;
-    private final PollenClient pollenClient;
+    private final PollenService pollenService;
 
     @Autowired
-    public CombinedController(WeatherService weatherService, PollenClient pollenClient) {
+    public CombinedController(WeatherService weatherService, PollenService pollenService) {
         this.weatherService = weatherService;
-        this.pollenClient = pollenClient;
+        this.pollenService = pollenService;
     }
 
     @GetMapping("/weather")
     public String showWeather(Model model) {
-        model.addAttribute("weatherData", weatherService.getOptimalForecast());
-        model.addAttribute("pollenList", pollenClient.fetchPollenData());
-        return "weather"; 
+        WeatherData smhi = weatherService.getSmhiForecast();
+        WeatherData met = weatherService.getMetForecast();
+        WeatherData optimal = weatherService.chooseBestWeather(smhi, met);
+        List<PollenData> pollenList=pollenService.getTop3PollenData();
+
+
+        model.addAttribute("weather", optimal);
+        model.addAttribute("smhi", smhi);
+        model.addAttribute("met", met);
+        model.addAttribute("pollenList",pollenList);
+
+        return "weather";
     }
+
 }
