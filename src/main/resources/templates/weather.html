@@ -1,10 +1,114 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <title>Optimal Weather Forecast for Liljeholmen</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #5e35b1; /* purple-800 */
+            color: #fff;
+        }
+
+        .card-optimal {
+            background-color: #7e57c2; /* purple-700 */
+            color: white;
+            width: 75%;
+            margin: 0 auto;
+        }
+
+        .card-forecast {
+            background-color: #8e24aa; /* purple-600 */
+            color: white;
+            width: 37.5%;
+        }
+
+        .card-pollen {
+            background-color: #ab47bc; /* purple-500 */
+            color: white;
+            width: 75%;
+            margin: 0 auto;
+        }
+
+        .card {
+            border-radius: 1rem;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            margin: 2rem 0 1rem;
+            color: white;
+        }
+
+        .pollen-table {
+            background-color: #ba68c8; /* purple-400 */
+            color: white;
+        }
+
+        .pollen-table th, .pollen-table td {
+            text-align: center;
+            color: midnightblue;
+            background-color: transparent;
+        }
+
+        .pollen-table th {
+            background-color:#7e57c2; /* subtle contrast */
+        }
+    </style>
 </head>
 <body>
-$END$
+
+<div class="container py-4">
+
+    <!-- Optimal Weather -->
+    <h2 class="section-title">Optimal Weather Forecast for Liljeholmen</h2>
+    <div class="card card-optimal text-center p-4">
+        <h2>Best Forecast</h2>
+        <p><strong>Provider:</strong> <span th:text="${weather.source} + ' - ' + ${weather.timestamp}"></span></p>
+        <p><strong>Temperature:</strong> <span th:text="${weather.temperature} + ' °C'"></span></p>
+        <p><strong>Humidity:</strong> <span th:text="${weather.humidity} + ' %'"></span></p>
+    </div>
+
+    <!-- SMHI and MET Forecasts -->
+    <div class="d-flex justify-content-around flex-wrap my-4 gap-3">
+        <!-- SMHI Forecast -->
+        <div class="card card-forecast p-3 text-center">
+            <h5>SMHI Forecast</h5>
+            <p><strong>Temperature:</strong> <span th:text="${smhi.temperature}"></span> °C</p>
+            <p><strong>Humidity:</strong> <span th:text="${smhi.humidity}"></span> %</p>
+            <p><strong>Time:</strong> <span th:text="${smhi.timestamp}"></span></p>
+        </div>
+
+        <!-- MET Forecast -->
+        <div class="card card-forecast p-3 text-center">
+            <h5>MET Forecast</h5>
+            <p><strong>Temperature:</strong> <span th:text="${met.temperature}"></span> °C</p>
+            <p><strong>Humidity:</strong> <span th:text="${met.humidity}"></span> %</p>
+            <p><strong>Time:</strong> <span th:text="${met.timestamp}"></span></p>
+        </div>
+    </div>
+
+    <!-- Pollen Data -->
+    <h2 class="section-title">Pollen Forecast</h2>
+    <div class="card card-pollen p-4">
+        <table class="table table-bordered pollen-table">
+            <thead>
+            <tr>
+                <th>Pollen Type</th>
+                <th>Level</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="pollen : ${pollenList}">
+                <td th:text="${pollen.name}"></td>
+                <td th:text="${pollen.level}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
 </body>
 </html>
